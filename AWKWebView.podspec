@@ -17,14 +17,14 @@ Pod::Spec.new do |spec|
 
   spec.name         = "AWKWebView"
   spec.version      = "0.0.1"
-  spec.summary      = "A short description of AWKWebView."
+  spec.summary      = "Manager Cookie"
 
   # This description is used to generate tags and improve search results.
   #   * Think: What does it do? Why did you write it? What is the focus?
   #   * Try to keep it short, snappy and to the point.
   #   * Write the description between the DESC delimiters below.
   #   * Finally, don't worry about the indent, CocoaPods strips it!
-  spec.description  = "A Category To Manager Cookie"
+  spec.description  = "管理WKWebView的cookie注入和存储"
 
   spec.homepage     = "https://github.com/374112524/AWKWebView"
   # spec.screenshots  = "www.example.com/screenshots_1.gif", "www.example.com/screenshots_2.gif"
@@ -89,7 +89,7 @@ Pod::Spec.new do |spec|
   #  Not including the public_header_files will make all headers public.
   #
 
-  spec.source_files  = "Classes", "Classes/**/*.{h,m}"
+  spec.source_files  = "AWKWebViewExample", "AWKWebViewExample/AWKWebView/**/*.{h,m}"
   spec.exclude_files = "Classes/Exclude"
 
   # spec.public_header_files = "Classes/**/*.h"
