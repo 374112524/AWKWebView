@@ -30,10 +30,5 @@
     
 }
 
-- (void)webView:(WKWebView *)webView decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse decisionHandler:(void (^)(WKNavigationResponsePolicy))decisionHandler {
-    [webView syncResponseCookie:navigationResponse];
-    decisionHandler(WKNavigationResponsePolicyAllow);
-}
-
 
 @end

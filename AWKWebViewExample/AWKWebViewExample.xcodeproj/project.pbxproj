@@ -15,6 +15,7 @@
 		36BC6A2824A204A20022B053 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 36BC6A2624A204A20022B053 /* LaunchScreen.storyboard */; };
 		36BC6A2B24A204A20022B053 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 36BC6A2A24A204A20022B053 /* main.m */; };
 		36BC6A3424A205160022B053 /* WKWebView+cookie.m in Sources */ = {isa = PBXBuildFile; fileRef = 36BC6A3324A205160022B053 /* WKWebView+cookie.m */; };
+		36BC6A4424A363030022B053 /* WKWebViewNavigationDeleagate.m in Sources */ = {isa = PBXBuildFile; fileRef = 36BC6A4324A363030022B053 /* WKWebViewNavigationDeleagate.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,8 @@
 		36BC6A2A24A204A20022B053 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		36BC6A3224A205160022B053 /* WKWebView+cookie.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WKWebView+cookie.h"; sourceTree = "<group>"; };
 		36BC6A3324A205160022B053 /* WKWebView+cookie.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "WKWebView+cookie.m"; sourceTree = "<group>"; };
+		36BC6A4224A363030022B053 /* WKWebViewNavigationDeleagate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WKWebViewNavigationDeleagate.h; sourceTree = "<group>"; };
+		36BC6A4324A363030022B053 /* WKWebViewNavigationDeleagate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WKWebViewNavigationDeleagate.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +88,8 @@
 			children = (
 				36BC6A3224A205160022B053 /* WKWebView+cookie.h */,
 				36BC6A3324A205160022B053 /* WKWebView+cookie.m */,
+				36BC6A4224A363030022B053 /* WKWebViewNavigationDeleagate.h */,
+				36BC6A4324A363030022B053 /* WKWebViewNavigationDeleagate.m */,
 			);
 			path = AWKWebView;
 			sourceTree = SOURCE_ROOT;
@@ -161,6 +166,7 @@
 			files = (
 				36BC6A2024A204A10022B053 /* ViewController.m in Sources */,
 				36BC6A1A24A204A10022B053 /* AppDelegate.m in Sources */,
+				36BC6A4424A363030022B053 /* WKWebViewNavigationDeleagate.m in Sources */,
 				36BC6A2B24A204A20022B053 /* main.m in Sources */,
 				36BC6A3424A205160022B053 /* WKWebView+cookie.m in Sources */,
 				36BC6A1D24A204A10022B053 /* SceneDelegate.m in Sources */,
