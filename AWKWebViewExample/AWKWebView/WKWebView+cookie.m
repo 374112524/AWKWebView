@@ -40,11 +40,19 @@ void _swizzleInstanceMethod(Class className, SEL original, SEL new) {
         _swizzleInstanceMethod(self, @selector(setNavigationDelegate:), @selector(cookie_setNavigationDelegate:));
     });
 }
+-(void)addCookieName:(NSString *)name value:(NSString *)value domains:(NSArray <NSString *>*)domains{
+    for (NSString * domain in domains) {
+        [self addCookieName:name value:value path:@"/" domain:domain];
+    }
+}
 -(void)addCookieName:(NSString *)name value:(NSString *)value path:(NSString *)path domain:(NSString *)domain{
     [self addCookieName:name value:value path:path domain:domain toUserContent:self.configuration.userContentController];
 }
 -(void)addCookieName:(NSString *)name value:(NSString *)value path:(NSString *)path domain:(NSString *)domain toUserContent:(WKUserContentController *)userContentController{
-    
+    name = name?:@"";
+    value = value?:@"";
+    path = path?:@"/";
+    domain = domain?:@"";
     NSString *cookieValue = [NSString stringWithFormat:@"'%@=%@;path=%@;domain=%@';", name,value,path,domain];
     if (!self.cookies) {
         self.cookies = [NSMutableArray array];
@@ -53,6 +61,21 @@ void _swizzleInstanceMethod(Class className, SEL original, SEL new) {
     cookieValue = [NSString stringWithFormat:@"document.cookie = %@",cookieValue];
     WKUserScript * cookieScript = [[WKUserScript alloc] initWithSource: cookieValue injectionTime:WKUserScriptInjectionTimeAtDocumentStart forMainFrameOnly:NO];
     [userContentController addUserScript:cookieScript];
+    
+    for (NSHTTPCookie * cookie in [NSHTTPCookieStorage sharedHTTPCookieStorage].cookies) {
+        if ([cookie.name isEqualToString:name] && [cookie.value isEqualToString:value] && [cookie.domain isEqualToString:domain]) {
+            return;
+        }
+    }
+    NSMutableDictionary *cookieProperties = [NSMutableDictionary dictionary];
+    [cookieProperties setObject:name forKey:NSHTTPCookieName];
+    [cookieProperties setObject:value forKey:NSHTTPCookieValue];
+    [cookieProperties setObject:domain forKey:NSHTTPCookieDomain];
+    [cookieProperties setObject:domain forKey:NSHTTPCookieOriginURL];
+    [cookieProperties setObject:path forKey:NSHTTPCookiePath];
+    NSHTTPCookie * cookie = [NSHTTPCookie cookieWithProperties:cookieProperties];
+    [[NSHTTPCookieStorage sharedHTTPCookieStorage] setCookie:cookie];
+    NSLog(@"%@",[NSHTTPCookieStorage sharedHTTPCookieStorage].cookies);
     
 }
 -(NSString *)getCustomCookies{
@@ -94,7 +117,7 @@ void _swizzleInstanceMethod(Class className, SEL original, SEL new) {
     }
 }
 
-//通过 JS 注入的形式，来处理异步 ajax cookie 同步的问题
+//通过 JS 注入 NSHTTPCookieStorage->WKHTTPCookieStore
 - (NSString *)ajaxCookieScripts {
     NSMutableString *cookieScript = [[NSMutableString alloc] init];
     for (NSHTTPCookie *cookie in [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies]) {
@@ -132,7 +155,10 @@ void _swizzleInstanceMethod(Class className, SEL original, SEL new) {
     }
     [self cookie_setNavigationDelegate:self.delegate];
 }
-
+-(void)syncRequestCookie{
+    WKUserScript * cookieScript = [[WKUserScript alloc] initWithSource: [self ajaxCookieScripts] injectionTime:WKUserScriptInjectionTimeAtDocumentStart forMainFrameOnly:NO];
+    [self.configuration.userContentController addUserScript:cookieScript];
+}
 -(void)syncResponseCookie:(WKNavigationResponse *)navigationResponse{
     if (@available(iOS 11.0, *)) {
         WKHTTPCookieStore *cookieStroe = self.configuration.websiteDataStore.httpCookieStore;

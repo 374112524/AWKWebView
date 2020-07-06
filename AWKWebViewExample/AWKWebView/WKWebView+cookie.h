@@ -15,6 +15,8 @@ NS_ASSUME_NONNULL_BEGIN
 /*! @abstract 手动将cookie注入到网页中 ,在loadRequest之前调用*/
 -(void)addCookieName:(NSString *)name value:(NSString *)value path:(NSString *)path domain:(NSString *)domain;
 -(void)addCookieName:(NSString *)name value:(NSString *)value path:(NSString *)path domain:(NSString *)domain toUserContent:(WKUserContentController *)userContentController;
+/*! @abstract 多域名注入cookie*/
+-(void)addCookieName:(NSString *)name value:(NSString *)value domains:(NSArray <NSString *>*)domains;
 /*! @abstract 获取手动注入的cookies*/
 -(NSString *)getCustomCookies;
 /*! @abstract 手动将cookie注入到请求中 */
