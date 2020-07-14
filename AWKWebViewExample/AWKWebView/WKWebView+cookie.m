@@ -57,7 +57,7 @@ void _swizzleInstanceMethod(Class className, SEL original, SEL new) {
     if (!self.cookies) {
         self.cookies = [NSMutableArray array];
     }
-    [self.cookies addObject:cookieValue];
+    [self.cookies addObject:[cookieValue stringByReplacingOccurrencesOfString:@"'" withString:@""]];
     cookieValue = [NSString stringWithFormat:@"document.cookie = %@",cookieValue];
     WKUserScript * cookieScript = [[WKUserScript alloc] initWithSource: cookieValue injectionTime:WKUserScriptInjectionTimeAtDocumentStart forMainFrameOnly:NO];
     [userContentController addUserScript:cookieScript];
@@ -95,7 +95,7 @@ void _swizzleInstanceMethod(Class className, SEL original, SEL new) {
 -(WKNavigation *)cookie_loadRequest:(NSURLRequest *)request{
     NSMutableURLRequest * mutableRequest = request.mutableCopy;
     //同步本地cookie
-    [self syncRequestCookie:mutableRequest];
+//    [self syncRequestCookie:mutableRequest];
     NSString * headerCookies = [mutableRequest.allHTTPHeaderFields objectForKey:@"Cookie"];
     if (!headerCookies.length) {
         //本地没有cookie则使用手动设置的cookie
